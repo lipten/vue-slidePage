@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8">
+    <title>simple - vue-slidePage</title>
+    <style type="text/css">
+      p {
+        margin: 0;
+      }
+      html,body,#app {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+		/* 自定义动画 */
+		@keyframes flash {
+			from, 50%, to {
+				opacity: 1;
+			}
+
+			25%, 75% {
+				opacity: 0;
+			}
+		}
+
+		.flash {
+			animation: flash .5s;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		.fadeIn {
+			animation: fadeIn .5s;
+		}
+
+		ul {
+			list-style: none;
+		}
+		.slide-page p.middle {
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			text-align: center;
+			width: 100%;
+			margin-top: -20px;
+		}
+
+    .slide-page ul {
+			margin: 0;
+			padding: 0;
+			width: 90%;
+			margin-left: 5%;
+		}
+
+		.slide-page ul li {
+			width: 100%;
+			padding: 100px 10px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-bottom: 1px solid rgb(83, 83, 83);
+			background: rgba(255, 255, 255, .5);
+			text-align: center;
+		}
+
+		.slide-page h2 {
+			margin: 0;
+			padding: 20px 0;
+			text-align: center;
+		}
+
+		.add {
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -20px;
+			margin-left: -50px;
+			padding: 38px 0;
+			box-sizing: border-box;
+			width: 100px;
+			height: 100px;
+			webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			border-radius: 50%;
+			background-color: rgb(47, 95, 178);
+			color: #fff;
+			text-align: center;
+			font-size: 14px;
+			text-decoration: none;
+		}
+
+		.add:hover {
+			background-color: rgb(57, 123, 219);
+		}
+
+		.add:active {
+			background-color: rgb(31, 79, 134);
+		}
+		.page1 {
+			background-color: #99CC33;
+		}
+
+		.page2 {
+			background-color: rgb(197, 181, 88);
+		}
+
+		.page3 {
+			background-color: #99CCCC;
+		}
+		.page1 .step1 {
+			position: absolute;
+			top: 100px;
+			left: 19%;
+			text-align: center;
+			width: 100px;
+			height: 100px;
+			background-color: rgb(178, 116, 57);
+			border-radius: 50%;
+		}
+
+		.page1 .step2 {
+			position: absolute;
+			bottom: 100px;
+			right: 19%;
+			text-align: center;
+			width: 100px;
+			height: 100px;
+			background-color: rgb(116, 178, 9);
+		}
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <slide-container>
+        <slide-page v-for="(item, index) in list" class="slide-page" :class="item.class">
+					<h2>{{item.name}}</h2>
+					<p v-if="index == 0" class="middle">往下滑动看看</p>
+          <ul v-if="item.hasList">
+            <li>滚动内容 - 第1条</li>
+            <li>滚动内容 - 第2条</li>
+            <li>滚动内容 - 第3条</li>
+            <li>滚动内容 - 第4条</li>
+            <li>滚动内容 - 最后1条内容</li>
+          </ul>
+
+          <button v-if="item.hasBtn" class="add" @click="goCustom">更多示例</button>
+        </slide-page>
+      </slide-container>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.2.4/dist/vue.min.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            list: [
+              {name: 'Page1 - 简单示例', class: 'page1', hasStep: true},
+              {name: 'Page2 - 内容滚动', class: 'page2', hasList: true},
+              {name: 'Page3 - 更多示例', class: 'page3', hasBtn: true},
+            ],
+          }
+        },
+
+        methods: {
+          goCustom() {
+						location.href = 'custom.html'
+					}
+        },
+        mounted() {
+          
+        },
+        components: {
+          'SlideContainer': window['slidePage'].SlideContainer,
+          'SlidePage': window['slidePage'].SlidePage,
+        }
+      })
+
+    </script>
+  </body>
+
+</html>

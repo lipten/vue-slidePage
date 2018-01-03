@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8">
+    <title>custom - slidePage</title>
+    <style type="text/css">
+      p {
+        margin: 0;
+      }
+      html,body,#app {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+		/* 自定义动画 */
+		@keyframes flash {
+			from, 50%, to {
+				opacity: 1;
+			}
+
+			25%, 75% {
+				opacity: 0;
+			}
+		}
+
+		.flash {
+			animation: flash .5s;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		.fadeIn {
+			animation: fadeIn .5s;
+		}
+
+		ul {
+			list-style: none;
+    }
+    .slide-page ul {
+			margin: 0;
+			padding: 0;
+			width: 90%;
+			margin-left: 5%;
+		}
+
+		.slide-page ul li {
+			width: 100%;
+			padding: 100px 10px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-bottom: 1px solid rgb(83, 83, 83);
+			background: rgba(255, 255, 255, .5);
+			text-align: center;
+		}
+
+		.slide-page h2 {
+			margin: 0;
+			padding: 20px 0;
+			text-align: center;
+		}
+
+		.slide-page p {
+			box-sizing: border-box;
+			padding: 10px;
+			text-align: center;
+		}
+
+		.slide-page p.middle {
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			text-align: center;
+			width: 100%;
+			margin-top: -20px;
+		}
+
+		.slide-page p.tips {
+			font-size: 14px;
+			color: #444;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			text-align: center;
+		}
+
+		.prev-page,
+		.next-page {
+			display: block;
+			width: 25px;
+			height: 25px;
+			line-height: 26px;
+			position: absolute;
+			right: 2px;
+			z-index: 9999;
+			background: rgba(255, 255, 255, .5);
+			border-radius: 50%;
+			font-size: 14px;
+			color: #666;
+			text-align: center;
+		}
+
+		.prev-page {
+			top: 0;
+		}
+
+		.next-page {
+			bottom: 0;
+		}
+
+		.prev-page:active {
+			background: rgba(155, 155, 155, .5);
+		}
+
+		.next-page:active {
+			background: rgba(155, 155, 155, .5);
+		}
+
+		.pagination {
+			width: 30px;
+			height: auto;
+			position: fixed;
+			top: 50%;
+			right: 5px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			padding: 40px 0;
+			z-index: 1;
+			transform: translate(0, -50%);
+		}
+
+		.pagination a {
+			width: 25px;
+			height: 25px;
+			display: block;
+			line-height: 28px;
+			text-align: center;
+      padding-left: 3px;
+      cursor: pointer;
+		}
+
+		.pagination a:after {
+			content: "";
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			display: inline-block;
+			background: rgba(0, 0, 0, .5);
+			-webkit-transition: background .3s ease;
+			-moz-transition: background .3s ease;
+			-ms-transition: background .3s ease;
+			-o-transition: background .3s ease;
+			transition: background .3s ease;
+		}
+
+		.pagination a.active:after {
+			background: rgba(255, 255, 255, .5);
+		}
+
+		.add,
+		.remove{
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -20px;
+			margin-left: -50px;
+			padding: 38px 0;
+			box-sizing: border-box;
+			width: 100px;
+			height: 100px;
+			webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			border-radius: 50%;
+			background-color: rgb(47, 95, 178);
+			color: #fff;
+			text-align: center;
+			font-size: 14px;
+			text-decoration: none;
+		}
+
+		.add:hover {
+			background-color: rgb(57, 123, 219);
+		}
+
+		.add:active {
+			background-color: rgb(31, 79, 134);
+		}
+
+		.remove {
+			background-color: rgb(151, 43, 43);
+		}
+
+		.remove:hover {
+			background-color: rgb(194, 63, 63);
+		}
+
+		.remove:active {
+			background-color: rgb(116, 33, 33);
+		}
+
+		.page1 {
+			background-color: #99CC33;
+		}
+
+		.page2 {
+			background-color: rgb(197, 181, 88);
+		}
+
+		.page3 {
+			background-color: #99CCCC;
+		}
+
+		.page4 {
+			background-color: rgb(204, 125, 51);
+		}
+		.page1 .step1 {
+			position: absolute;
+			top: 100px;
+			left: 19%;
+			text-align: center;
+			width: 100px;
+			height: 100px;
+			background-color: rgb(178, 116, 57);
+			border-radius: 50%;
+		}
+
+		.page1 .step2 {
+			position: absolute;
+			bottom: 100px;
+			right: 19%;
+			text-align: center;
+			width: 100px;
+			height: 100px;
+			background-color: rgb(116, 178, 9);
+		}
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <slide-container ref="slide-container"
+          :use-swipe="true"
+          :use-wheel="true"
+          :use-animation="true"
+          :refresh="true"
+          @before="onBefore">
+        <slide-page v-for="(item, index) in list" class="slide-page" :class="item.class">
+          <h2>{{item.name}}</h2>
+          <div v-if="item.hasStep" class="step step1 flash" data-delay="1000"></div>
+          <div v-if="item.hasStep" class="lazy step2 fadeIn" data-delay="500"></div>
+
+          <p v-if="item.hasTips" class="middle">通过before事件和slideTo方法<br/>定制实现右侧的分页器 -- ></p>
+				  <p v-if="item.hasTips" class="tips">通过开放的事件接口和方法可以实现很多定制功能</p>
+
+          <ul v-if="item.hasList">
+            <li>滚动内容 - 第1条</li>
+            <li>滚动内容 - 第2条</li>
+            <li>滚动内容 - 第3条</li>
+            <li>滚动内容 - 第4条</li>
+            <li>滚动内容 - 最后1条内容</li>
+          </ul>
+
+          <button v-if="item.isAdd" class="add" @click="addPage">添加</button>
+
+          <button v-if="item.isRemove" class="remove" @click="removePage(index)">删除page</button>
+        </slide-page>
+      </slide-container>
+
+      <nav class="pagination" id="pagination">
+          <div class="prev-page" @click="prevPage()">&Lambda;</div>
+          <a v-for="(item, index) in list"
+              @click="slideTo(index+1)"
+              :class="{'active': curPage === index+1}"></a>
+          <div class="next-page" @click="nextPage()">V</div>
+        </nav>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.2.4/dist/vue.min.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            list: [
+              {name: 'Page1 - 自定义动画', class: 'page1', hasStep: true},
+              {name: 'Page2 - 定制分页', class: 'page2', hasTips: true},
+              {name: 'Page3 - 侦测内容长度滚动', class: 'page3', hasList: true},
+              {name: 'Page4 - 动态添加page', class: 'page1', isAdd: true},
+            ],
+            curPage: 1,
+          }
+        },
+
+        methods: {
+          addPage() {
+            this.list.push({name: 'Page' + (this.list.length+1) + ' - 删除Page', class: 'page4', isRemove: true})
+            this.$nextTick(function() {
+              this.$refs['slide-container'].update()
+            })
+          },
+          removePage(index) {
+            this.list.splice(index, 1);
+            this.$nextTick(function() {
+              this.$refs['slide-container'].update()
+            })
+          },
+          prevPage() {
+            this.$refs['slide-container'].slidePrev();
+          },
+          nextPage() {
+            this.$refs['slide-container'].slideNext();
+          },
+          slideTo(page) {
+            this.$refs['slide-container'].slideTo(page)
+            this.curPage = page
+          },
+          onBefore(origin, direction, target) {
+            this.curPage = target
+          }
+        },
+        mounted() {
+          setTimeout(() => {
+            this.$refs['slide-container'].slideFire(1)
+          },2000)
+        },
+        components: {
+          'SlideContainer': window['slidePage'].SlideContainer,
+          'SlidePage': window['slidePage'].SlidePage,
+        }
+      })
+
+    </script>
+  </body>
+
+</html>
