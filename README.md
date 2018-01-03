@@ -14,7 +14,7 @@ vue-slidePage is a fullscreen scrolling component of Vue.js, Based on [slidePage
 #### Install
 
 ```bash
-$ npm i -S vue-slidePage
+$ npm i -S vue-slidepage
 ```
 
 Work on a Vue instance:
@@ -110,6 +110,7 @@ SlideContainer:
     <tr>
       <td>after</td>
       <td>次全屏滚动后触发事件，回调三个参数(origin, direction, target)，参数释义同上</td>
+      <td>$event.after</td>
     </tr>
   </tbody>
 </table>
